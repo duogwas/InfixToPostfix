@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infix to Postfix</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body bgcolor="#FFFFFF">
+    <center><span class="header">Infix to Postfix</span></center>
+
+    <center>
+        <form name="input_form">
+            <table class="form_in" cellspacing="0" cellpadding="4">
+                <tr bgcolor="#003366">
+                    <td>
+                        <font face="verdana,arial,helvetica" size="-2" color="#CCCCDD">Infix Expression :</font>
+                    </td>
+
+                    <td>
+                        <font face="verdana,arial,helvetica" size="-2" color="#CCCCDD">Postfix Expression :</font>
+                    </td>
+
+                    <td>
+                        <font face="verdana,arial,helvetica" size="-2" color="#FFFFFF">Result :</font>
+                    </td>
+
+                    <td></td>
+
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input type="text" name="infixVal" class="text_box" value=""></td>
+                    <td><input type="text" name="postfixVal" class="text_box" value=""></td>
+                    <td><input type="text" name="resultVal" class="text_box" value=""></td>
+                    <td align="bottom"><input type="button" onClick="InfixToPostfix()" value="Infix to Postfix" class="button"></td>
+                    <td align="bottom"><input type="button" onClick="Reset()" value="Reset" class="button"></td>
+                </tr>
+            </table>
+        </form>
+        <div id="error_message" class="error_message"></div>
+    </center>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
