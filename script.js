@@ -51,7 +51,7 @@ function isValidInput(infixStr) {
         //     return false;
         // }
         if (isOperator(infixStr[i]) && isOperator(infixStr[i + 1])) {
-            displayErrorMessage("Dữ liệu đầu vào không phải là biểu thức");
+            displayErrorMessage("Không được nhập liên tục hai toán tử");
             return false;
         }
     }
@@ -153,7 +153,7 @@ function PostfixEval(postfixStr) {
     return topStack(stackArr);
 }
 
-function Reset(){
+function Reset() {
     document.input_form.infixVal.value = "";
     document.input_form.postfixVal.value = "";
     document.input_form.resultVal.value = "";
