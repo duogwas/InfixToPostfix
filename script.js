@@ -46,10 +46,10 @@ function isValidInput(infixStr) {
 
     // Check for consecutive operands or operators
     for (var i = 0; i < infixStr.length - 1; i++) {
-        if (isOperand(infixStr[i]) && isOperand(infixStr[i + 1])) {
-            displayErrorMessage("Dữ liệu đầu vào không phải là biểu thức");
-            return false;
-        }
+        // if (isOperand(infixStr[i]) && isOperand(infixStr[i + 1])) {
+        //     displayErrorMessage("Dữ liệu đầu vào không phải là biểu thức1");
+        //     return false;
+        // }
         if (isOperator(infixStr[i]) && isOperator(infixStr[i + 1])) {
             displayErrorMessage("Dữ liệu đầu vào không phải là biểu thức");
             return false;
