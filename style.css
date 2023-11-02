@@ -38,8 +38,9 @@ body {
 }
 
 .inputdata {
+    margin: 0 auto;
     text-align: center;
-    margin-top: 21vh;
+    margin-top: 10vh;
 }
 
 .span1 {
@@ -59,7 +60,7 @@ body {
     margin-top: 2vw;
 }
 
-.btn1 {
+.convertButton {
     border: wheat;
     background-color: #6f459e;
     text-align: center;
@@ -67,12 +68,29 @@ body {
     font-weight: 500;
     border-radius: 8px;
     margin-top: 1.5vw;
-    width: 9vw;
+    margin-left: -90px;
+    width: 15vw;
     height: 10vh;
 }
 
-button:hover {
+.resetButton {
+    border: wheat;
+    background-color: #999999;
+    text-align: center;
+    color: white;
+    font-weight: 500;
+    border-radius: 8px;
+    margin-top: 1.5vw;
+    width: 9vw;
+    height: 3vw;
+}
+
+.convertButton:hover {
     background-color: #c694ff;
+}
+
+.resetButton:hover {
+    background-color: #EE0000;
 }
 
 input:focus {
@@ -81,6 +99,7 @@ input:focus {
 
 .output {
     text-align: center;
+    margin-left: -75px;
 }
 
 .error_message {
@@ -88,4 +107,5 @@ input:focus {
     color: red;
     font-weight: bold;
     margin-top: 10px;
+    margin-left: -60px;
 }

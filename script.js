@@ -185,4 +185,14 @@ function convertAndCalculate() {
     document.getElementById("result").innerHTML = result;
 }
 
+function Reset() {
+    document.getElementById("postfix").innerHTML = "";
+    document.getElementById("result").innerHTML = "";
+    document.getElementById("infixvalue").value="";
+    var infixPlacehoder = document.getElementById("infixvalue");
+    infixPlacehoder.placeholder = "Infix Expression";
+    var errorMessageDiv = document.getElementById("error_message");
+    errorMessageDiv.innerHTML = "";
+}
+
 
