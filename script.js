@@ -57,7 +57,7 @@ function isValidInput(infixStr) {
     }
 
     //check chỉ nhận số và toán tử
-    var validInputPattern = /^[\d+\-\/*\(\)\^]+$/;
+    var validInputPattern = /^[\d\s+\-\/*\(\)\^]+$/;
     if (!validInputPattern.test(infixStr)) {
         displayErrorMessage("Dữ liệu đầu vào không phải là biểu thức");
         return false;
