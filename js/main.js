@@ -199,6 +199,11 @@ function evaluatePostfix(postfix) {
     return stack[0];
 }
 
+function roundToDecimalPlaces(number, decimalPlaces) {
+    var factor = Math.pow(10, decimalPlaces);
+    return Math.round(number * factor) / factor;
+}
+
 function convertAndCalculate() {
     var infixValue = document.getElementById("infixValue").value;
     var postfixValue = infixToPostfix(infixValue);
@@ -207,12 +212,14 @@ function convertAndCalculate() {
 
     var result = evaluatePostfix(postfixValue);
     document.getElementById("postfixResultArea").hidden = false;
-    document.getElementById("postfixCal").value = "Kết quả biểu thức: " + result;
+    var roundedResult = Number.isInteger(result) ? result : roundToDecimalPlaces(result, 2);
+    document.getElementById("postfixCal").value = "Kết quả biểu thức: " + roundedResult;
 }
 
 function resetValue() {
-    document.getElementById("infixValue").value=""
+    document.getElementById("infixValue").value = ""
     document.getElementById("postfixArea").hidden = true;
     document.getElementById("postfixResultArea").hidden = true;
     document.getElementById("infixError").innerHTML = "";
 }
+
