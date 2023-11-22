@@ -49,47 +49,74 @@ function precedency(pre) {
         return 0;
 }
 
-function isValidInput(infixStr) {
-    // Check input rỗng
-    if (infixStr.trim() === "") {
-        displayErrorMessage("Dữ liệu đầu vào không được để trống");
-        return false;
+document.addEventListener("DOMContentLoaded", function () {
+    // Lắng nghe sự kiện input trên ô mật khẩu
+    document.getElementById("infixValue").addEventListener("input", function () {
+        validateInfix();
+    });
+});
+
+function validateInfix() {
+    var infixStr = document.getElementById("infixValue").value;
+    document.getElementById("infixError").innerHTML = "";
+    var button = document.getElementById("btnConvert");
+
+    // Biến để kiểm tra xem có lỗi hay không
+    var hasError = false;
+    // Vô hiệu hóa button
+    button.disabled = false;
+
+    // Kiểm tra nếu để trống
+    if (infixStr === "") {
+        document.getElementById("infixError").innerHTML += "Không được để trống biểu thức<br>";
+        hasError = true;
+        button.disabled = true;
     }
 
-    //check chỉ nhận số và toán tử
+    // Kiểm tra nếu nhập chữ cái
     var validInputPattern = /^[\d\s+\-\/*\(\)\^]+$/;
     if (!validInputPattern.test(infixStr)) {
-        displayErrorMessage("Dữ liệu đầu vào không phải là biểu thức");
-        return false;
+        document.getElementById("infixError").innerHTML += "Biểu thức trung tố phải là số<br>";
+        hasError = true;
+        button.disabled = true;
     }
 
-    //check không nhận liên tiếp 2 toán tử
+    // Kiểm tra nhập liên tục 2 toán tử
     for (var i = 0; i < infixStr.length - 1; i++) {
 
         if (operatorCheckInput(infixStr[i]) && operatorCheckInput(infixStr[i + 1])) {
-            displayErrorMessage("Không được nhập liên tục hai toán tử");
-            return false;
+            document.getElementById("infixError").innerHTML += "Không được phép nhập liên tiếp 2 toán tử<br>";
+            hasError = true;
+            button.disabled = true;
         }
     }
 
-    return true;
-}
+    //kiểm tra đằng sau toán tử phải là toán hạng
+    if (operatorCheckInput(infixStr[infixStr.length - 1])) {
+        document.getElementById("infixError").innerHTML += "Biểu thức không được kết thúc hoặc băt đầu bằng một toán tử<br>";
+        hasError = true;
+        button.disabled = true;
+    }
 
-function displayErrorMessage(message) {
-    var errorMessageDiv = document.getElementById("error_message");
-    errorMessageDiv.innerHTML = message;
-    setTimeout(function () {
-        errorMessageDiv.innerHTML = "";
-    }, 5000);
+    //kiểm tra biểu thức phải có ít nhất 1 toán tử và 2 toán hạng
+    var operandCount = (infixStr.match(/[\d]+/g) || []).length;
+    var operatorCount = (infixStr.match(/[+\-*/^]+/g) || []).length;
+    if (operandCount < 2 || operatorCount < 1) {
+        document.getElementById("infixError").innerHTML += "Biểu thức phải có ít nhất 1 toán tử và 2 toán hạng<br>";
+        hasError = true;
+        button.disabled = true;
+    }
+
+    // Đặt màu sắc cho thông báo lỗi
+    document.getElementById("infixError").style.color = "red";
+
+    // Nếu biểu thức hợp lệ
+    return !hasError;
 }
 
 function infixToPostfix(infix) {
     var postfix = [];
     var stack = [];
-
-    if (!isValidInput(infix)) {
-        return;
-    }
 
     for (var i = 0; i < infix.length; i++) {
         var token = infix[i];
@@ -173,26 +200,19 @@ function evaluatePostfix(postfix) {
 }
 
 function convertAndCalculate() {
-    var infixValue = document.getElementById("infixvalue").value;
-    var postfix = infixToPostfix(infixValue);
-    if (postfix == undefined) {
-        document.getElementById("postfix").innerHTML = "";
-    }
-    else {
-        document.getElementById("postfix").innerHTML = postfix;
-    }
-    var result = evaluatePostfix(postfix);
-    document.getElementById("result").innerHTML = result;
+    var infixValue = document.getElementById("infixValue").value;
+    var postfixValue = infixToPostfix(infixValue);
+    document.getElementById("postfixArea").hidden = false;
+    document.getElementById("postfixValue").value = "Biểu thức hậu tố: " + postfixValue;
+
+    var result = evaluatePostfix(postfixValue);
+    document.getElementById("postfixResultArea").hidden = false;
+    document.getElementById("postfixCal").value = "Kết quả biểu thức: " + result;
 }
 
-function Reset() {
-    document.getElementById("postfix").innerHTML = "";
-    document.getElementById("result").innerHTML = "";
-    document.getElementById("infixvalue").value="";
-    var infixPlacehoder = document.getElementById("infixvalue");
-    infixPlacehoder.placeholder = "Infix Expression";
-    var errorMessageDiv = document.getElementById("error_message");
-    errorMessageDiv.innerHTML = "";
+function resetValue() {
+    document.getElementById("infixValue").value=""
+    document.getElementById("postfixArea").hidden = true;
+    document.getElementById("postfixResultArea").hidden = true;
+    document.getElementById("infixError").innerHTML = "";
 }
-
-
