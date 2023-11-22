@@ -221,5 +221,6 @@ function resetValue() {
     document.getElementById("postfixArea").hidden = true;
     document.getElementById("postfixResultArea").hidden = true;
     document.getElementById("infixError").innerHTML = "";
+    document.getElementById("btnConvert").disabled = true;
 }
 
