@@ -41,18 +41,19 @@
                 <input type="text" id="postfixCal" class="form-control">
               </div>
 
-              <div class="d-flex align-items-center mb-5">
-                <!-- <label class="control control--checkbox mb-0"><span class="caption">Remember me</span>
-                  <input type="checkbox" checked="checked" />
+              <div id="suggestInfixArea" class="align-items-center mb-5" hidden="true">
+                <span>Có phải bạn muốn nhập</span>
+                <label id="suggestLabel" class="control control--checkbox mb-0">
+                  <span id="suggestInfix" class="caption">showSuggestExpression</span>
+                  <input id="suggestCheckbox" type="checkbox" onchange="fillInfixSuggest()" />
                   <div class="control__indicator"></div>
-                </label> -->
+                </label>
               </div>
 
-              <button id="btnConvert" class="btn btn-block btn-primary text-white "
-              onclick="convertAndCalculate()" disabled="true">CHUYỂN ĐỔI</button>
-              <button id="btnReset" class="btn btn-block btn-danger text-white "
-                onclick="resetValue()">LÀM MỚI</button>  
-            
+              <button id="btnConvert" class="btn btn-block btn-primary text-white " onclick="convertAndCalculate()"
+                disabled="true">CHUYỂN ĐỔI</button>
+              <button id="btnReset" class="btn btn-block btn-danger text-white " onclick="resetValue()">LÀM MỚI</button>
+
               <span class="d-block text-left my-4 text-muted">ĐƯỢC THỰC HIỆN BỞI NHÓM 10</span>
 
               <div class="social-login">

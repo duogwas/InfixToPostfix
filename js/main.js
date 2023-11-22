@@ -60,17 +60,21 @@ function validateInfix() {
     var infixStr = document.getElementById("infixValue").value;
     document.getElementById("infixError").innerHTML = "";
     var button = document.getElementById("btnConvert");
+    var suggestCheckbox = document.getElementById('suggestCheckbox');
 
     // Biến để kiểm tra xem có lỗi hay không
     var hasError = false;
-    // Vô hiệu hóa button
     button.disabled = false;
+    suggestCheckbox.checked = false;
 
     // Kiểm tra nếu để trống
     if (infixStr === "") {
         document.getElementById("infixError").innerHTML += "Không được để trống biểu thức<br>";
         hasError = true;
         button.disabled = true;
+        document.getElementById("suggestInfixArea").hidden = true;
+        suggestCheckbox.checked = false;
+
     }
 
     // Kiểm tra nếu nhập chữ cái
@@ -79,6 +83,8 @@ function validateInfix() {
         document.getElementById("infixError").innerHTML += "Biểu thức trung tố phải là số<br>";
         hasError = true;
         button.disabled = true;
+        document.getElementById("suggestInfixArea").hidden = true;
+        suggestCheckbox.checked = false;
     }
 
     // Kiểm tra nhập liên tục 2 toán tử
@@ -88,6 +94,9 @@ function validateInfix() {
             document.getElementById("infixError").innerHTML += "Không được phép nhập liên tiếp 2 toán tử<br>";
             hasError = true;
             button.disabled = true;
+            document.getElementById("suggestInfixArea").hidden = false;
+            showSuggestInfix(infixStr);
+            break;
         }
     }
 
@@ -96,6 +105,8 @@ function validateInfix() {
         document.getElementById("infixError").innerHTML += "Biểu thức không được kết thúc hoặc băt đầu bằng một toán tử<br>";
         hasError = true;
         button.disabled = true;
+        document.getElementById("suggestInfixArea").hidden = true;
+        suggestCheckbox.checked = false;
     }
 
     //kiểm tra biểu thức phải có ít nhất 1 toán tử và 2 toán hạng
@@ -105,6 +116,8 @@ function validateInfix() {
         document.getElementById("infixError").innerHTML += "Biểu thức phải có ít nhất 1 toán tử và 2 toán hạng<br>";
         hasError = true;
         button.disabled = true;
+        document.getElementById("suggestInfixArea").hidden = true;
+        suggestCheckbox.checked = false;
     }
 
     // Đặt màu sắc cho thông báo lỗi
@@ -222,5 +235,57 @@ function resetValue() {
     document.getElementById("postfixResultArea").hidden = true;
     document.getElementById("infixError").innerHTML = "";
     document.getElementById("btnConvert").disabled = true;
+    document.getElementById("suggestInfixArea").hidden = true;
 }
 
+function areOperatorsEqual(operator1, operator2) {
+    return operator1 === operator2;
+}
+
+function suggestExpressionCorrection(expression) {
+    var operators = ["+", "-", "*", "/", "^"];
+    var correctedExpression = expression.replace(/(\d+)([+\-*/^]+)([+\-*/^]+)/g, function (match, operand, firstOperator, secondOperator) {
+        if (operators.includes(firstOperator) && operators.includes(secondOperator)) {
+            // if (areOperatorsEqual(firstOperator, secondOperator)) {
+            // Giữ lại số và chỉ giữ lại một trong hai toán tử
+            return operand + firstOperator;
+            // }
+            // else {
+            //     // Trả về danh sách gợi ý
+            //     return [
+            //         operand + firstOperator,
+            //         operand + secondOperator,
+            //         operand + firstOperator + secondOperator
+            //     ];
+            // }
+        }
+        return match;
+    });
+
+    return correctedExpression;
+}
+
+function showSuggestInfix(infixStr) {
+    var infixStr = document.getElementById("infixValue").value;
+    var expression = suggestExpressionCorrection(infixStr)
+    var label = document.getElementById("suggestLabel");
+    var span = label.querySelector(".caption");
+    if (span) {
+        span.textContent = expression;
+    }
+}
+
+function fillInfixSuggest() {
+    var infixInput = document.getElementById('infixValue');
+    var suggestCheckbox = document.getElementById('suggestCheckbox');
+    var span = document.getElementById('suggestInfix').textContent;
+
+    if (suggestCheckbox.checked) {
+        infixInput.value = span;
+        document.getElementById("btnConvert").disabled = false;
+        document.getElementById("infixError").innerHTML = "";
+        document.getElementById("suggestInfixArea").hidden = true;
+    } else {
+        infixInput.value = '';
+    }
+}
